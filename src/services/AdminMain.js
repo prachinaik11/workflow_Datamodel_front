@@ -1,14 +1,19 @@
 import React, { useState,useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate,useParams } from 'react-router-dom';
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 
 export default function AdminMain() {
-    //let navigate = useNavigate()
+    let navigate = useNavigate()
+    
     const [wf, setWf] = useState("")
     const [allwf,setAllwf] = useState([])
 
+    const refreshPage = () => {
+        navigate(0);
+      }
     useEffect(()=>{
+        
         loadUser();
     },[]);
 

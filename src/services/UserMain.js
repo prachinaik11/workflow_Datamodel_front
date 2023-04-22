@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate,useParams} from 'react-router-dom';
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 
@@ -8,18 +8,20 @@ export default function UserMain() {
     const [wf, setWf] = useState("");
     const [desc,setDesc] =useState("");
     const [allwf,setAllwf] = useState([])
-
+    const{id}=useParams();
     useEffect(()=>{
         loadUser();
     },[]);
 
     const loadUser=async()=>{
-        const result=await axios.get(`http://localhost:9191/workflow/workflowToInitialise/2`)
+        const result=await axios.get(`http://localhost:9191/workflow/workflowToInitialise/${id}`)
         setAllwf(result.data)
     }
-
+    const att="link";
     var bodyFormData = new FormData();
     bodyFormData.append('description', desc);
+    bodyFormData.append('attachments',att);
+
     console.log(desc);
 
     const onSubmit=async(e)=>{
@@ -46,7 +48,7 @@ export default function UserMain() {
         <div className='container'>
             <div className='row'>
                 <div className='col-md-6 offset-md-3 border rounded p-4 mt-2 shadow'>
-                    <Link className='btn btn-primary my-2' to={"/userins"}>See your Task</Link>
+                    <Link className='btn btn-primary my-2' to={`/userins/${id}`}>See your Task</Link>
                     <form onSubmit={(e)=>onSubmit(e)}>
                     <div className='mb-3'>
                             <label htmlFor='Name' className='form-label'>
@@ -72,7 +74,7 @@ export default function UserMain() {
                             />
                         </div>
                         <button type='submit'  className='btn btn-outline-primary'>Submit</button>
-                        <Link className='btn btn-outline-danger mx-2' to="/">Cancel</Link>
+                        {/* <Link className='btn btn-outline-danger mx-2' to="/">Cancel</Link> */}
                     </form >
                     <Table striped bordered hover >
                     <thead>

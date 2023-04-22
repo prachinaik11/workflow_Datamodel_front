@@ -26,6 +26,7 @@ const Admincreate = () => {
               console.log(response);
             });
         navigate("/adminmain");
+        navigate(0);
     }
 
 
@@ -49,7 +50,7 @@ const Admincreate = () => {
                 />
             </div>
             <button type='submit'  className='btn btn-outline-primary'>Submit</button>
-            <Link className='btn btn-outline-danger mx-2' to="/">Cancel</Link>
+            <Link className='btn btn-outline-danger mx-2' to="/adminmain">Cancel</Link>
         </form>
         </div>
         </div>

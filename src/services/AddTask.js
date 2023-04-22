@@ -6,7 +6,8 @@ export default function AddUser() {
     let navigate=useNavigate()
     const [task,setTask]=useState("")
     const {id}=useParams();
-    //console.log(id);
+    const [anyAll,setanyAll]=useState("")
+    const [isfirst,setIsFirst]=useState("")
     const [role, setRole] = useState("");
     const [val, setVal]=useState("");
     var bodyFormData = new FormData();
@@ -14,12 +15,15 @@ export default function AddUser() {
     if(role==='Role'){
         bodyFormData.append('description', task);
         bodyFormData.append('role',val);
+        bodyFormData.append('anyAll',anyAll);
+        bodyFormData.append('isFirst',isfirst);
         var url = (`http://localhost:9191/task/addTaskUsingRole/${id}`)
     }
     else{
         bodyFormData.append('description', task);
-        bodyFormData.append('workflowId',id);
         bodyFormData.append('userId',val);
+        bodyFormData.append('anyAll',anyAll);
+        bodyFormData.append('isFirst',isfirst);
         var url = (`http://localhost:9191/task/addTaskUsingUser/${id}`)
     }
 
@@ -31,15 +35,14 @@ export default function AddUser() {
             data: bodyFormData,
             headers: { "Content-Type": "multipart/form-data" },
           })
-            .then(function (response) {
-              //handle success
-              console.log(response);
-            })
-            .catch(function (response) {
-              //handle error
-              console.log(response);
-            });
+          .catch(error => {
+            alert(error);
+            console.log(error)
+            //navigate(`/`);
+            
+        });
         navigate(`/viewtask/${id}`);
+        navigate(0);
     };
 
     return (
@@ -69,6 +72,21 @@ export default function AddUser() {
                         <div><input type='radio' name="role" value="ID" on onChange={e=>setRole(e.target.value)}/> UseByID  </div>
                         <div><input type='radio' name="role" value="Role" on onChange={e=>setRole(e.target.value)}/> UseByRole</div>
                     </div>
+                    <div className='mb-3'>
+                        <label htmlFor='Name' className='form-label'>
+                        Select Task for Any or All 
+                        </label>
+                        <div><input type='radio' name="anyAll" value="any" on onChange={e=>setanyAll(false)}/> Any  </div>
+                        <div><input type='radio' name="anyAll" value="all" on onChange={e=>setanyAll(true)}/> All</div>
+                    </div>
+                    <div className='mb-3'>
+                        <label htmlFor='Name' className='form-label'>
+                        First Task
+                        </label>
+                        <div><input type='radio' name="isfirst" value="isfirst" on onChange={e=>setIsFirst(true)}/> Ture  </div>
+                        <div><input type='radio' name="isfirst" value="isfirst" on onChange={e=>setIsFirst(false)}/> False</div>
+                    </div>
+                    
                     Enter {role}
                     <div className='mb-3'>
                         <label htmlFor='Name' className='form-label'> 
@@ -80,12 +98,12 @@ export default function AddUser() {
                             name="comp_name"
                             //value="comp_name"
                             onChange={(e)=>setVal(e.target.value)}
-                            required
+                            //required
                         />
                     </div>
 
                     <button type='submit'  className='btn btn-outline-primary'>Submit</button>
-                    <Link className='btn btn-outline-danger mx-2' to="/">Cancel</Link>
+                    <Link className='btn btn-outline-danger mx-2' to={`/viewtask/${id}`}>Cancel</Link>
                     </form>
                 </div>
 

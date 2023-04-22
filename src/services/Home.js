@@ -1,124 +1,54 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import './styles.css';
-import Table from 'react-bootstrap/Table';
-import { Link, useNavigate } from 'react-router-dom'
-<link href="https://fonts.googleapis.com/css?family=Nunito|Pacifico&display=swap" rel="stylesheet"></link>
+import axios from 'axios';
+import './styles.css'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 
-export default function Home() {
-    let navigate=useNavigate()
-    const [users, setUsers] = useState([])
-    const [id, setid] = useState({
-        hr_id:""
-    })
-    useEffect(() => {
-        loadUsers();
+const Home = () => {
 
-    }, []
-    );
-    const {hr_id}=id;
-    const loadUsers = async () => {
-        // const result = await axios.get("http://localhost:8080/api/HR/get");
-        // setUsers(result.data);
+    let navigate=useNavigate();
 
-    }
-    const deleteUser = async (cid) => {
-        await axios.delete(`http://localhost:8080/api/HR/del/${cid}`)
-        loadUsers()
-    }
-
-    const onInputChange=(e)=>{
-        setid({...id,[e.target.name]:e.target.value});
-    }
-    ;
+    const [id,setWf]=useState([]);
 
     const onSubmit=async(e)=>{
-        //setid({...id,[e.target.name]:e.target.value});
-        console.log(hr_id);
-        navigate(`/viewuser/${hr_id}`);
-    };
+        var result=await axios.get(`http://localhost:9191/user/getUser/${id}`);
+        alert(result.data.role)
+        
+        if(result.data.role==="Admin")
+            navigate("/adminmain")
+        else
+            navigate(`/usermain/${id}`)
+        // alert(result.data.role);
 
-
-
-    var d = new Date();
-    var time = d.getHours();
-    if (time < 12) {
-        var gree = "Good Morning"
-    }
-    if (time > 12) {
-        var gree = "Good Afternoon"
-    }
-    if (time === 12) {
-        var gree = "Go Eat Lunch"
+        // navigate("/adminmain");
+        navigate(0);
     }
 
-    return (
 
-
+  return (
+    <div className='admincreate'>
         <div className='container'>
-            <h1><i>{gree}</i></h1>
-            <br></br>
-
-            {/* <Link className='btn btn-outline-light' to="/adduser">Add User</Link> */}
-            <Link className='btn btn-outline-primary ' to="/adduser">Add HR</Link>
-            <Link className='btn btn-outline-primary ' to="/vieworg">View Organisations</Link>
-            <form onSubmit={(e)=>onSubmit(e)}>
-            <div class="wrap">
-                <div class="search">
-                    <input type="text" 
-                    class="searchTerm" 
-                    placeholder="Enter HR ID"
-                    name="hr_id"
-                    value={hr_id}
-                    onChange={(e)=>onInputChange(e)}
-                    />
-                    <button type="submit" class="searchButton">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
+        <div className='col-md-6 offset-md-3 border rounded p-4 mt-2 shadow'>
+        <form onSubmit={(e)=>onSubmit(e)}>
+            <div className='mb-3'>
+                <label htmlFor='Name' className='form-label'>
+                   Enter your ID
+                </label>
+                <input
+                    type={"text"}
+                    className="form-control"
+                    placeholder='Enter Id'
+                    //value="wf_name"
+                    onChange={(e)=>setWf(e.target.value)}
+                    required
+                />
             </div>
-            </form>
-
-
-            <div className='py-4'>
-                <Table striped bordered hover >
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Company</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            users.map((user, index) => (
-                                <tr>
-                                    <th scope="row" key={index}>{index + 1}</th>
-                                    <td>{user.f_name}</td>
-                                    <td>{user.l_name}</td>
-                                    <td>{user.email}</td>
-                                    <td>{user.comp_id.comp_name}</td>
-                                    <td>
-                                        <Link className="btn btn-primary mx-2" to={`/viewuser/${user.hr_id}`}>
-                                            View
-                                        </Link>
-                                        <Link className='btn btn-outline-primary mx-2' to={`/edituser/${user.hr_id}`}>Edit</Link>
-                                        <button className='btn btn-danger mx-2' onClick={() => deleteUser(user.hr_id)}>Delete</button>
-                                    </td>
-                                </tr>
-                            )
-                            )
-                        }
-                    </tbody>
-                </Table>
-
-            </div>
-            <div className="footer">
-                <p>Made with ❤️ and 🧑‍💻 by <i>Harsh Tripathi</i></p>
-            </div>
+            <button type='submit'  className='btn btn-outline-primary'>Submit</button>
+            <Link className='btn btn-outline-danger mx-2' to="/adminmain">Cancel</Link>
+        </form>
         </div>
-    )
+        </div>
+    </div>
+  )
 }
+
+export default Home

@@ -42,7 +42,7 @@ export default function Tasks() {
                                     <th scope="row" key={index}>{index + 1}</th>
                                     <td>{task.description}</td>
                                     <></>
-                                    {/* <td>{task.userAuthorized.userId}</td> */}
+                                    <td>{task.userAuthorized && task.userAuthorized.userId}</td>
                                     <td>{task.role}</td>
                                     <td>{task.workflow.name}</td>
                                     <td>

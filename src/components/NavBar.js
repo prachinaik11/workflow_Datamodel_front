@@ -6,24 +6,17 @@ import { Link } from 'react-router-dom';
   - Logout Button
   - In more complex webpages you can include routes here with the help of React-Router
 */
-const NavBar = ({ user, setUser }) => {
+const NavBar = () => {
   // If the Logout button has been clicked then clear the loggedInUser object from localStorage and
   // update "user" state to null, in order to logout, otherwise on the next reload, the Effect hook will again read the user
   // from the localStorage and relogin without showing the login form
-  const logout = () => {
-    window.localStorage.removeItem('loggedInUser')
-    setUser(null)
-  }
 
-  // Prevents Key Exception errors if "user" state hasn't loaded yet
-  if (!user)
-    return null
   // Fully styled Navbar using Bootstrap (it can be a big pain to style Navbars)
   return (
     <div className='regular-shadow mb-1'>
       <nav className='navbar navbar-expand-lg navbar-dark bg-info' id='menu'>
         {/* UPDATE user.name PROPERTY IF IT DOESN'T EXIST */}
-        <h3>IIIT Bengalore Worklfow</h3>
+        <h3>IIIT Bengalore Workflow</h3>
         
         {/* Bootstrap element for hamburger menu on collapse */}
         <button
@@ -41,7 +34,8 @@ const NavBar = ({ user, setUser }) => {
               {/* Here you can put a Link of React-Router, not of use right now but helpful for the future */}
             </li>
           </ul>
-          <div className='inline my-2 my-lg-0'><button className='btn btn-primary' onClick={logout}>Logout</button></div>
+          <div className='inline my-2 my-lg-0'><Link className="btn btn-primary mx-2" to={`/`}>Logout
+                                        </Link></div>
         </div>
       </nav>
     </div>
