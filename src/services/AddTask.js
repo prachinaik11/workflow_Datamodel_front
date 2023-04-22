@@ -6,8 +6,8 @@ export default function AddUser() {
     let navigate=useNavigate()
     const [task,setTask]=useState("")
     const {id}=useParams();
-    const [anyAll,setanyAll]=useState("")
-    const [isfirst,setIsFirst]=useState("")
+    const [anyAll,setanyAll]=useState(false)
+    const [isfirst,setIsFirst]=useState(false)
     const [role, setRole] = useState("");
     const [val, setVal]=useState("");
     var bodyFormData = new FormData();
