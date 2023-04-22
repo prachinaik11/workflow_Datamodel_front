@@ -40,7 +40,7 @@ export default function UserMain() {
               //handle error
               console.log(response);
             });
-        navigate("/usermain");
+        navigate(`/usermain/${id}`);
     };
 
 
