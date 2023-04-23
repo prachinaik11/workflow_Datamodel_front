@@ -2,8 +2,13 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
+import xtype from 'xtypejs';
 
+
+let length1 = 0;
+let anyAll = false;
 const AddAction = () => {
+  
     let navigate = useNavigate();
     const[cat,setSelectedCategory]=useState([])
     const [tasks, setTask] = useState([])
@@ -21,16 +26,40 @@ const AddAction = () => {
         const result = await axios.get(`http://localhost:9191/task/fetchTaskList/${wid}`);
         setTask(result.data);
 
+
         const resultaction = await axios.get(`http://localhost:9191/action/viewActions/${tid}`);
         setAllaction(resultaction.data);
         console.log("hello");
-        console.log(allact);
+        // console.log(resultaction.data[0]["task"]["anyAll"]);
+        anyAll = resultaction.data[0]["task"]["anyAll"];
+        length1 = resultaction.data.length
+        console.log(anyAll);
+        console.log(length1);
+        console.log(length1 === 1 && anyAll === true);
+        console.log(`http://localhost:9191/task/fetchTaskList/${wid}`)
+        console.log(`http://localhost:9191/action/viewActions/${tid}`);
 
+        // console.log(resultaction.data.length);
+        // console.log(result.data)
     }
     var bodyFormData = new FormData();
     bodyFormData.append('name', action);
     bodyFormData.append('nextTaskId', cat)
+
+
     const onSubmit = async (e) => {
+        // alert("in functionnnn")
+        // alert(length1 === 1)
+        // alert(anyAll === true)
+        if(length1 === 1 && anyAll === true){
+            console.log("I am where I want to be ");
+            alert("You can not add more than one actions for an 'ALL' task !");
+            navigate(`/addaction/${wid}/${tid}`);
+        }
+        else {
+
+            // alert("noooooo");
+
         axios({
             method: "post",
             url: `http://localhost:9191/action/addAction/${tid}?name=${action}&nextTaskId=${cat}`,
@@ -46,6 +75,7 @@ const AddAction = () => {
                 console.log(response);
             });
         navigate(`/addaction/${wid}/${tid}`);
+        }
     }
 
 
@@ -105,8 +135,8 @@ const AddAction = () => {
                             </select>
                         </div>
 
-                        <button type='submit' className='btn btn-outline-primary'>Submit</button>
-                        <Link className='btn btn-outline-danger mx-2' to={`/viewtask/${wid}`}>Back</Link>
+                        <button type='submit' className='btn btn-outline-primary'>Submit111</button>
+                        <Link className='btn btn-outline-danger mx-2' to={`/viewtask/${wid}`}>Back12</Link>
 
                         
                     </form>

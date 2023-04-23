@@ -16,7 +16,7 @@ const NavBar = () => {
     <div className='regular-shadow mb-1'>
       <nav className='navbar navbar-expand-lg navbar-dark bg-info' id='menu'>
         {/* UPDATE user.name PROPERTY IF IT DOESN'T EXIST */}
-        <h3>IIIT Bengalore Workflow</h3>
+        <h3>IIIT Bangalore Workflow</h3>
         
         {/* Bootstrap element for hamburger menu on collapse */}
         <button

@@ -30,7 +30,7 @@ export default function Tasks() {
                             <th scope="col">Description</th>
                             <th scope="col">UserByID</th>
                             <th scope="col">Role</th>
-                            <th scope="col">Name</th>
+                            {/* <th scope="col">Name</th> */}
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -44,7 +44,7 @@ export default function Tasks() {
                                     <></>
                                     <td>{task.userAuthorized && task.userAuthorized.userId}</td>
                                     <td>{task.role}</td>
-                                    <td>{task.workflow.name}</td>
+                                    {/* <td>{task.workflow.name}</td> */}
                                     <td>
                                         <Link className="btn btn-primary mx-2" to={`/addaction/${id}/${task.taskId}`}>
                                             Action

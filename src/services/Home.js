@@ -31,18 +31,18 @@ const Home = () => {
         <form>
             <div className='mb-3'>
                 <label htmlFor='Name' className='form-label'>
-                   Enter your ID
+                   Enter your ID 12
                 </label>
                 <input
                     type={"text"}
                     className="form-control"
-                    placeholder='Enter Id'
+                    placeholder='Enter ID'
                     //value="wf_name"
                     onChange={(e)=>setWf(e.target.value)}
                     required
                 />
             </div>
-            <button className='btn btn-outline-primary' onClick={navi()}></button>
+            <button className='btn btn-outline-primary' onClick={navi()}>Login</button>
             {/* <Link className='btn btn-outline-danger mx-2' to="/adminmain">Cancel</Link> */}
         </form>
         </div>
